@@ -2,12 +2,14 @@ import { RANGE } from "../utils/constants";
 import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
 export async function getBookings({ filter, sortBy, page }) {
+  // BUILDING QUERY
   let query = supabase
     .from("bookings")
     .select(
       "id,created_at,startDate,endDate,numNights,numGuests,status,totalPrice , cabins(name) , guests(fullName,email)",
       { count: "exact" }
     );
+
   // Filter
   if (filter) query = query[filter.method || "eq"](filter.field, filter.value);
 

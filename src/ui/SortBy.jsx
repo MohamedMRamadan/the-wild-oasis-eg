@@ -5,8 +5,7 @@ function SortBy({ options }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const sortBy = searchParams.get("sortBy") || "";
   const selectHandler = (e) => {
-    const { value } = e.target;
-    searchParams.set("sortBy", value);
+    searchParams.set("sortBy", e.target.value);
     setSearchParams(searchParams);
   };
   return (

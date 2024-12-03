@@ -23,11 +23,10 @@ function CabinTable() {
   if (filterValue === "no-discount")
     filteredCabins = cabins.filter((cabin) => +cabin.discount === 0);
 
-  let sortedCabins;
   const sortValue = searchParams.get("sortBy") || "name-asc";
   const [field, ditrection] = sortValue.split("-");
   const sortDirection = ditrection === "desc" ? 1 : -1;
-  sortedCabins = filteredCabins.sort(
+  const sortedAndFilteredCabins = filteredCabins.sort(
     (a, b) => sortDirection * (b[field] - a[field])
   );
 
@@ -43,7 +42,7 @@ function CabinTable() {
           <div></div>
         </Table.Header>
         <Table.Body
-          data={sortedCabins}
+          data={sortedAndFilteredCabins}
           render={(cabin) => <CabinRow cabin={cabin} key={cabin.id} />}
         />
       </Table>

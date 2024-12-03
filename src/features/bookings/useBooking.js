@@ -9,6 +9,7 @@ function useBooking() {
     queryKey: ["booking", id],
     queryFn: () => getBooking(id),
   });
+
   return [data, isLoading];
 }
 

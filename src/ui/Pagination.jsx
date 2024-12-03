@@ -63,7 +63,7 @@ function Pagination({ count }) {
   const [searchParams, setSearchParmas] = useSearchParams();
 
   const currentPage = +searchParams.get("page") || 1;
-  const pageCount = Math.ceil(count / RANGE); //23/5
+  const pageCount = Math.ceil(count / RANGE); //23/5 = 3 pages
 
   function nextPage() {
     if (currentPage < pageCount) {

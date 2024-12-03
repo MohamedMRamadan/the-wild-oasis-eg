@@ -30,7 +30,6 @@ function DashboardLayout() {
   return (
     <StyledDashboardLayout>
       <Stats
-        ats
         bookings={bookings}
         confirmedStays={confirmedStays}
         numOfDays={numOfDays}

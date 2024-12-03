@@ -36,8 +36,8 @@ const StyledList = styled.ul`
   box-shadow: var(--shadow-md);
   border-radius: var(--border-radius-md);
 
-  right: ${(props) => props.position.x}px;
-  top: ${(props) => props.position.y}px;
+  right: ${(props) => props["data-position"].x}px;
+  top: ${(props) => props["data-position"].y}px;
 `;
 
 const StyledButton = styled.button`
@@ -86,6 +86,7 @@ const Toggle = ({ id }) => {
   const openListHandler = (e) => {
     e.stopPropagation();
     const rect = e.target.closest("button").getBoundingClientRect();
+
     setPosition({
       x: window.innerWidth - rect.x - rect.width,
       y: rect.y + rect.height + 8,
@@ -101,13 +102,10 @@ const Toggle = ({ id }) => {
 };
 const List = ({ id, children }) => {
   const { openId, position, close } = useContext(MenusContext);
-  const ref = useOutsideClick(() => {
-    console.log("Click from outside");
-    close();
-  }, false);
+  const ref = useOutsideClick(close, false);
   if (openId !== id) return null;
   return createPortal(
-    <StyledList ref={ref} position={position}>
+    <StyledList ref={ref} data-position={position}>
       {children}
     </StyledList>,
     document.body

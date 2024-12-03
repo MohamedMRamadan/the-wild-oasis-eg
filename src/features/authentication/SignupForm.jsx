@@ -14,7 +14,6 @@ function SignupForm() {
 
   const signUpHandler = (data) => {
     const { passwordConfirm, ...signUpData } = data;
-    console.log(signUpData);
     signUp(
       {
         ...signUpData,

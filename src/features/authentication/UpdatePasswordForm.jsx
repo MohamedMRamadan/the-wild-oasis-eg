@@ -4,12 +4,47 @@ import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 import useUpdateUser from "./useUpdateUser";
+import useUser from "./useUser";
+import { TEST_USER } from "../../utils/constants";
+import styled from "styled-components";
+import { FiAlertTriangle } from "react-icons/fi";
+
+const UserBlock = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 2rem 1rem;
+`;
+const UserMsg = styled.p`
+  display: flex;
+  gap: 0.5rem;
+`;
+
+const UpadtePasswordAuth = ({ children }) => {
+  return (
+    <UserBlock>
+      <FiAlertTriangle fill="yellow" color="black" fontSize={20} />
+      <UserMsg>{children}</UserMsg>
+    </UserBlock>
+  );
+};
 
 function UpdatePasswordForm() {
   const { register, handleSubmit, formState, getValues, reset } = useForm();
   const { errors } = formState;
 
   const { updateUser, isUpdating } = useUpdateUser();
+  const {
+    user: { email },
+  } = useUser();
+
+  if (email === TEST_USER)
+    return (
+      <UpadtePasswordAuth>
+        This account not allowed to update password
+      </UpadtePasswordAuth>
+    );
 
   function onSubmit({ password }) {
     updateUser({ password }, { onSuccess: reset });

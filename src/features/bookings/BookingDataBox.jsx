@@ -100,7 +100,6 @@ const Footer = styled.footer`
   color: var(--color-grey-500);
   text-align: right;
 `;
-
 // A purely presentational component
 function BookingDataBox({ booking }) {
   const {
@@ -119,6 +118,7 @@ function BookingDataBox({ booking }) {
     cabins: { name: cabinName },
   } = booking;
 
+  console.log(observations);
   return (
     <StyledBookingDataBox>
       <Header>

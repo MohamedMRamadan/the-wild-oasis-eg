@@ -1,7 +1,5 @@
 import supabase, { supabaseUrl } from "./supabase";
 
-const STORAGE_URL = `${supabaseUrl}/storage/v1/object/public/cabin-images`;
-
 export async function getCabins() {
   let { data: cabins, error } = await supabase.from("cabins").select("*");
   if (error) {
@@ -10,8 +8,8 @@ export async function getCabins() {
   }
   return cabins;
 }
+
 export async function createUpdateCabin(newCabin, id) {
-  console.log(newCabin);
   const isImageHasPath = newCabin.image?.startsWith?.(supabaseUrl);
   // 1.create / Update cabin
   const imageName = !isImageHasPath
@@ -19,14 +17,15 @@ export async function createUpdateCabin(newCabin, id) {
     : "";
   const imagePath = isImageHasPath
     ? newCabin.image
-    : `${STORAGE_URL}/${imageName}`;
+    : `${import.meta.env.VITE_STORAGE_URL}/${imageName}`;
 
+  // BUILDING QUERY
   let query = supabase.from("cabins");
 
-  // A) Create Cabin
+  //* A) Create Cabin
   if (!id) query = query.insert([{ ...newCabin, image: imagePath }]);
 
-  // b) Edit Cabin
+  //* b) Edit Cabin
   if (id) query = query.update({ ...newCabin, image: imagePath }).eq("id", id);
 
   const { data: cabin, error } = await query.select().single();
@@ -35,7 +34,7 @@ export async function createUpdateCabin(newCabin, id) {
     console.error(error);
     throw new Error(`cabin couldn't be ${id ? "updated" : "created"}`);
   }
-  // 2.create image
+  //* 2.create image
   if (!isImageHasPath) {
     const { error: storageError } = await supabase.storage
       .from("cabin-images")

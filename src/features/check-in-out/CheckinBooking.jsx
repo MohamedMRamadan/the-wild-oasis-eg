@@ -26,6 +26,7 @@ const Box = styled.div`
 
 function CheckinBooking() {
   const moveBack = useMoveBack();
+  // checkbox
   const [confirmPaid, setConfirmPaid] = useState(false);
   const [addBreakfast, setAddBreakfast] = useState(false);
 
@@ -34,7 +35,8 @@ function CheckinBooking() {
   const [{ breakfastPrice } = {}, isSettingsLoading] = useSettings();
 
   useEffect(() => {
-    setConfirmPaid(booking?.isPaid ?? false);
+    setConfirmPaid(booking?.isPaid);
+    // setConfirmPaid(booking?.isPaid ?? false);
   }, [booking]);
 
   if (isLoading || isSettingsLoading) return <Spinner />;
